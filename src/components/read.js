@@ -3,6 +3,17 @@ import React, { useEffect, useState } from 'react';
 import { Table, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
+const accessToken='7de686649d50b75cc361593fbc01f5484a21b47e1a371044441417ee3e46f850'
+
+axios.interceptors.request.use(
+    config=>{
+        config.headers.authorization=`${accessToken}`;
+        return config;
+    },
+)
+
+
+
 export default function Read() {
     const [APIData, setAPIData] = useState([]);
     useEffect(() => {
@@ -21,15 +32,15 @@ export default function Read() {
         localStorage.setItem('STATUS', status)
     }
 
-    const getData = () => {
-        axios.get(`https://gorest.co.in/public/v1/users/123`)
+    const getData = (id) => {
+        axios.get(`https://gorest.co.in/public/v1/users/${id}`)
             .then((getData) => {
                 setAPIData(getData.data);
             })
     }
 
     const onDelete = (id) => {
-        axios.delete(`https://gorest.co.in/public/v1/users/123${id}`)
+        axios.delete(`https://gorest.co.in/public/v1/users/${id}`)
         .then(() => {
             getData();
         })

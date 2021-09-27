@@ -3,6 +3,17 @@ import axios from 'axios';
 import { Button, Form } from 'semantic-ui-react';
 import { useState } from 'react';
 
+const accessToken='7de686649d50b75cc361593fbc01f5484a21b47e1a371044441417ee3e46f850'
+
+axios.interceptors.request.use(
+    config=>{
+        config.headers.authorization=`Bearer ${accessToken}`
+    },
+    error=>{
+        return Promise.reject(error);
+    }
+)
+
 
 export default function Create(){
 const [name, setName] = useState('');
